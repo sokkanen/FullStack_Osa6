@@ -4,7 +4,7 @@ import {vote_message, zero} from '../reducers/notificationReducer'
 
 const AnecdoteList = (props) => {
     const store = props.store
-    const anecdotes = store.getState().anecdotes
+    const anecdotes = store.getState().anecdotes.filter(a => a.content.includes(store.getState().filter))
 
     const voteAnecdote = (id) => {
         store.dispatch(vote(id))
