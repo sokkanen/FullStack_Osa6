@@ -5,7 +5,7 @@ const filterReducer = (state = '', action) => {
       default: return state
     }
   }
-  
+
   export default filterReducer
 
   export const set_filter = (filter) => {

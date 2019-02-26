@@ -4,15 +4,13 @@ import {vote} from '../reducers/anecdoteReducer'
 import {vote_message, zero} from '../reducers/notificationReducer'
 
 const AnecdoteList = (props) => {
-    const anecdotes = props.anecdotes.filter(a => a.content.includes(props.filter))
-
     const voteAnecdote = (id) => {
         props.vote(id)
         voteMessage(id)
     }
 
     const voteMessage = (id) => {
-      const message = anecdotes.filter(a => a.id === id)[0].content
+      const message = props.anecdotes.filter(a => a.id === id)[0].content
       props.vote_message(message)
       setTimeout(() => {
         props.zero()
@@ -22,7 +20,7 @@ const AnecdoteList = (props) => {
     return (
         <div>
           <h2>Anecdotes</h2>
-          {anecdotes.map(anecdote =>
+          {props.anecdotes.map(anecdote =>
             <div key={anecdote.id}>
               <div>
                 {anecdote.content}
@@ -37,11 +35,13 @@ const AnecdoteList = (props) => {
       )
 }
 
+const visibleAnecdotes = ({anecdotes, filter}) => {
+  return anecdotes.filter(a => a.content.includes(filter))
+}
+
 const mapStateToProps = (state) => {
   return {
-    anecdotes: state.anecdotes,
-    filter: state.filter,
-    message: state.message
+    anecdotes: visibleAnecdotes(state)
   }
 }
 
