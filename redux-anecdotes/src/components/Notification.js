@@ -1,14 +1,19 @@
 import React from 'react';
+import {new_message, vote_message} from '../reducers/notificationReducer'
 
-const Notification = () => {
+const Notification = (props) => {
+  const store = props.store
   const style = {
     border: 'solid',
     padding: 10,
     borderWidth: 1
   }
+  if (store.getState().message === null){
+    return (<div></div>)
+  }
   return (
     <div style={style}>
-      render here notification...
+      {store.getState().message}
     </div>
   )
 }
