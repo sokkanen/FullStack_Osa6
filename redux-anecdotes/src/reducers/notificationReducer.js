@@ -1,10 +1,8 @@
 
   const notificationReducer = (state = null, action) => {
     switch (action.type) {
-      case 'VOTE_MESSAGE':
-      return `You voted '${action.data}'`
       case 'NEW_MESSAGE':
-      return `New anecdote '${action.data}' created`
+      return action.data
       case 'ZERO':
       return null
       default: return state
@@ -13,28 +11,14 @@
   
   export default notificationReducer
 
-  export const vote_message = (message) => {
-    return (
-      {
-      type: 'VOTE_MESSAGE',
-      data: message 
-      }
-    )
+  export const setNotification = (message, time) => {
+    return async dispatch => {
+      await dispatch({ type: 'NEW_MESSAGE', data: message })
+      setTimeout(() => {
+        dispatch({
+          type: 'ZERO'
+        })
+      }, time * 1000);
+    }
   }
-
-  export const new_message = (content) => {
-    return (
-      {
-      type: 'NEW_MESSAGE',
-      data: content
-      }
-    )
-  }
-
-  export const zero = () => {
-    return (
-      {
-      type: 'ZERO',
-      }
-    )
-  }
+  
