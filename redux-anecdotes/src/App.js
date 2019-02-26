@@ -6,10 +6,19 @@ const App = (props) => {
   const anecdotes = store.getState()
   
   const vote = (id) => {
-    console.log('vote', id)
     store.dispatch({
       type: 'VOTE',
       data: {id}
+    })
+  }
+
+  const newAnecdote = (event) => {
+    event.preventDefault()
+    store.dispatch({
+      type: 'NEW',
+      data: {
+        content: event.target.new.value
+      }
     })
   }
   
@@ -28,8 +37,8 @@ const App = (props) => {
         </div>
       )}
       <h2>create new</h2>
-      <form>
-        <div><input /></div>
+      <form onSubmit={newAnecdote}>
+        <div><input name="new"/></div>
         <button>create</button>
       </form>
     </div>
